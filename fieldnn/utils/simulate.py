@@ -37,7 +37,7 @@ def get_simulated_tensor_from_fldname(fld_name, B_lenP, B2P_lnEC, prefix_layers_
         print(layer_idx, '-->', current_info.shape)
         print(layer_idx + 1, '-->', next_info.shape)
 
-
+ 
     fld_tensor_idx = next_info
     # print(fld_tensor.shape)
     return fld_tensor_idx
