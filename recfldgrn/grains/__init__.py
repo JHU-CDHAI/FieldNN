@@ -71,13 +71,13 @@ Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: [v2idx.get(i) for i 
 ###### P Rec
 fld2grn = 'P@age-AgeNumeDftGrn'
 from .nume.age_grn import func_convert_AGEwgt
-Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: len(v2idx) * [1]
+Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: list(range(len(v2idx)))
 Field2Grain_2_get_GrnWgtList_Fn[fld2grn] = func_convert_AGEwgt
 
 ###### A1C Rec
 fld2grn = 'A1C@V-A1CNumeDftGrn'
 from .nume.a1c_grn import func_convert_A1Cwgt
-Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: len(v2idx) * [1]
+Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: list(range(len(v2idx)))
 Field2Grain_2_get_GrnWgtList_Fn[fld2grn] = func_convert_A1Cwgt
 
 
