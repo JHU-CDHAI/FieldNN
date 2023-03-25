@@ -5,5 +5,7 @@ def func_convert_DiagVgrn(x):
     if pd.isna(x): 
         return ['_missing']
     else:
-        li = ['A-' + x[0], 'B-' + x[:3], 'C-' + x.split('.')[-1], 'D-' +x]
+        li = ['A-' + x[0], 'B-' + x[:3], 'C-' + x.split('.')[-1], 
+              # 'D-' +x
+              ]
         return li

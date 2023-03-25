@@ -17,7 +17,7 @@ Field2Grain_2_get_GrnStrList_Fn[fld2grn] = get_basicInfoGrn_list
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: [v2idx.get(i) for i in get_basicInfoGrn_list(x)]
 
 ###### Diag Rec
-fld2grn = 'Diag@V-DiagDftGrn'
+fld2grn = 'Diag@Value-DiagDftGrn'
 from .cate.diag_grn import func_convert_DiagVgrn
 Field2Grain_2_get_GrnStrList_Fn[fld2grn] = func_convert_DiagVgrn
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: [v2idx.get(i) for i in func_convert_DiagVgrn(x)]
