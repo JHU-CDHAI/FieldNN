@@ -9,7 +9,7 @@ def load_DTgrn_Dictionary():
     W = ['Wx'] + [f'W{i}' for i in range(1, 8)]
     WY = ['WYx'] + [f'WY{i}' for i in range(1, 56)]
     H = ['Hx'] + [f'H{i}' for i in range(0, 24)]
-    value_list = ['_missing'] + Y + M + D + S + W + WY + H 
+    value_list = ['_padding', '_missing'] + Y + M + D + S + W + WY + H 
     v2freq = {k:0 for k in value_list}
     idx2v = {idx: v for idx, v in enumerate(v2freq.keys())}
     v2idx = {v:k for k, v in idx2v.items()}

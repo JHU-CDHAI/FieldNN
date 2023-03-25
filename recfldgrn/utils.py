@@ -7,7 +7,7 @@ import os
 def generate_grain_vocab_info(s):
     value_list = itertools.chain(*s.to_list())
     d = pd.Series(value_list).value_counts().to_dict()
-    v2freq = {}
+    v2freq = {'_padding': 0}
     if '_missing' in d:
         v2freq['_missing'] = d.pop('_missing') # I should have some prefix here. 
     for k, v in d.items(): v2freq[k] = v
