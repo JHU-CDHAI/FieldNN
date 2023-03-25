@@ -1,5 +1,5 @@
-data
-data/
+# data
+# data/
 Documents/
 2022Data/
 _old/
@@ -15,6 +15,6 @@ __pycache__/*
 */_230113version
 *.log
 *.pkl
-*.p
+# *.p
 */L2
 .DS_Store

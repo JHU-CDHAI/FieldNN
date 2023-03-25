@@ -1,0 +1,283 @@
+PID,ECID,PNID,PNSectID,SectName
+P0,EC21,72374,140,History of Present Illness
+P0,EC21,72374,142,Physical Exam
+P0,EC21,72374,143,Assessment/Plan
+P0,EC21,72374,144,Patient Instructions
+P0,EC21,72374,145,Problem List/Past Medical History
+P0,EC21,72374,146,Procedure/Surgical History
+P0,EC21,72374,147,Medications
+P0,EC21,72374,148,Allergies
+P0,EC21,72374,149,Social History
+P0,EC21,72374,150,Family History
+P0,EC21,72374,151,Health Maintenance
+P0,EC20,70410,152,Chief Complaint
+P0,EC20,70410,153,History of Present Illness
+P0,EC20,70410,154,Review of Systems
+P0,EC20,70410,155,Physical Exam
+P0,EC20,70410,156,Assessment/Plan
+P0,EC20,70410,157,Patient Instructions
+P0,EC20,70410,158,Problem List/Past Medical History
+P0,EC20,70410,159,Procedure/Surgical History
+P0,EC20,70410,160,Medications
+P0,EC20,70410,161,Allergies
+P0,EC20,70410,162,Social History
+P0,EC21,72374,141,Review of Systems
+P0,EC20,70410,163,Family History
+P0,EC19,71667,215,Family History
+P0,EC12,71801,138,Health Maintenance
+P0,EC13,70411,117,History of Present Illness
+P0,EC13,70411,118,Review of Systems
+P0,EC13,70411,119,Physical Exam
+P0,EC13,70411,120,Assessment/Plan
+P0,EC13,70411,121,Problem List/Past Medical History
+P0,EC13,70411,122,Procedure/Surgical History
+P0,EC13,70411,123,Medications
+P0,EC13,70411,124,Allergies
+P0,EC13,70411,125,Social History
+P0,EC13,70411,126,Lab Results
+P0,EC12,71801,127,Chief Complaint
+P0,EC12,71801,128,History of Present Illness
+P0,EC12,71801,129,Review of Systems
+P0,EC12,71801,130,Physical Exam
+P0,EC12,71801,131,Assessment/Plan
+P0,EC12,71801,132,Patient Instructions
+P0,EC12,71801,133,Problem List/Past Medical History
+P0,EC12,71801,134,Procedure/Surgical History
+P0,EC12,71801,135,Medications
+P0,EC12,71801,136,Allergies
+P0,EC12,71801,137,Social History
+P0,EC21,72374,139,Chief Complaint
+P0,EC13,70411,116,Chief Complaint
+P0,EC20,70410,164,Health Maintenance
+P0,EC14,71802,166,History of Present Illness
+P0,EC16,70566,192,History of Present Illness
+P0,EC16,70566,193,Review of Systems
+P0,EC16,70566,194,Physical Exam
+P0,EC16,70566,195,Assessment/Plan
+P0,EC16,70566,196,Patient Instructions
+P0,EC16,70566,197,Problem List/Past Medical History
+P0,EC16,70566,198,Procedure/Surgical History
+P0,EC16,70566,199,Medications
+P0,EC16,70566,200,Allergies
+P0,EC16,70566,201,Social History
+P0,EC16,70566,202,Family History
+P0,EC16,70566,203,Health Maintenance
+P0,EC19,71667,204,Chief Complaint
+P0,EC19,71667,205,History of Present Illness
+P0,EC19,71667,206,Review of Systems
+P0,EC19,71667,207,Physical Exam
+P0,EC19,71667,208,Assessment/Plan
+P0,EC19,71667,209,Patient Instructions
+P0,EC19,71667,210,Problem List/Past Medical History
+P0,EC19,71667,211,Procedure/Surgical History
+P0,EC19,71667,212,Medications
+P0,EC16,70566,191,Chief Complaint
+P0,EC14,71802,165,Chief Complaint
+P0,EC18,71800,190,Health Maintenance
+P0,EC18,71800,188,Social History
+P0,EC14,71802,167,Review of Systems
+P0,EC14,71802,168,Physical Exam
+P0,EC14,71802,169,Assessment/Plan
+P0,EC14,71802,170,Patient Instructions
+P0,EC14,71802,171,Problem List/Past Medical History
+P0,EC14,71802,172,Procedure/Surgical History
+P0,EC14,71802,173,Medications
+P0,EC14,71802,174,Allergies
+P0,EC14,71802,175,Social History
+P0,EC14,71802,176,Family History
+P0,EC14,71802,177,Health Maintenance
+P0,EC18,71800,178,Chief Complaint
+P0,EC18,71800,179,History of Present Illness
+P0,EC18,71800,180,Review of Systems
+P0,EC18,71800,181,Physical Exam
+P0,EC18,71800,182,Assessment/Plan
+P0,EC18,71800,183,Patient Instructions
+P0,EC18,71800,184,Problem List/Past Medical History
+P0,EC18,71800,185,Procedure/Surgical History
+P0,EC18,71800,186,Medications
+P0,EC18,71800,187,Allergies
+P0,EC18,71800,189,Family History
+P0,EC19,71667,213,Allergies
+P0,EC19,71667,214,Social History
+P0,EC19,71667,216,Health Maintenance
+P1,EC2,70851,224,Medications
+P1,EC0,71666,232,Physical Exam
+P1,EC0,71666,231,Review of Systems
+P1,EC0,71666,230,History of Present Illness
+P1,EC0,71666,229,Chief Complaint
+P1,EC2,70851,228,Health Maintenance
+P1,EC2,70851,227,Family History
+P1,EC2,70851,226,Social History
+P1,EC2,70851,225,Allergies
+P1,EC2,70851,223,Procedure/Surgical History
+P1,EC2,70851,222,Problem List/Past Medical History
+P1,EC2,70851,221,Assessment/Plan
+P1,EC2,70851,220,Physical Exam
+P1,EC2,70851,219,Review of Systems
+P1,EC2,70851,218,History of Present Illness
+P1,EC2,70851,217,Chief Complaint
+P1,EC0,71666,234,Assessment/Plan
+P1,EC0,71666,235,Patient Instructions
+P1,EC0,71666,233,Medicare Wellness
+P1,EC0,71666,237,Procedure/Surgical History
+P1,EC8,72255,253,Health Maintenance
+P1,EC8,72255,252,Family History
+P1,EC8,72255,251,Social History
+P1,EC8,72255,250,Allergies
+P1,EC8,72255,249,Medications
+P1,EC8,72255,248,Procedure/Surgical History
+P1,EC8,72255,247,Problem List/Past Medical History
+P1,EC0,71666,236,Problem List/Past Medical History
+P1,EC8,72255,246,Assessment/Plan
+P1,EC8,72255,244,History of Present Illness
+P1,EC8,72255,243,Chief Complaint
+P1,EC0,71666,242,Health Maintenance
+P1,EC0,71666,241,Family History
+P1,EC0,71666,240,Social History
+P1,EC0,71666,239,Allergies
+P1,EC0,71666,238,Medications
+P1,EC8,72255,245,Physical Exam
+P2,EC9,70514,99,Family History
+P2,EC4,70253,68,Physical Exam
+P2,EC4,70253,65,Chief Complaint
+P2,EC4,70253,66,History of Present Illness
+P2,EC4,70253,67,Review of Systems
+P2,EC4,70253,69,Assessment/Plan
+P2,EC9,70514,100,Immunizations
+P2,EC4,70253,71,Procedure/Surgical History
+P2,EC9,70514,95,Procedure/Surgical History
+P2,EC9,70514,96,Medications
+P2,EC9,70514,97,Allergies
+P2,EC3,71919,115,Health Maintenance
+P2,EC3,71919,114,Immunizations
+P2,EC3,71919,113,Family History
+P2,EC3,71919,112,Social History
+P2,EC3,71919,111,Allergies
+P2,EC9,70514,94,Problem List/Past Medical History
+P2,EC3,71919,110,Medications
+P2,EC4,70253,70,Problem List/Past Medical History
+P2,EC9,70514,98,Social History
+P2,EC3,71919,106,Medicare Wellness
+P2,EC3,71919,105,Physical Exam
+P2,EC3,71919,104,Review of Systems
+P2,EC3,71919,103,History of Present Illness
+P2,EC3,71919,102,Chief Complaint
+P2,EC9,70514,101,Health Maintenance
+P2,EC3,71919,109,Procedure/Surgical History
+P2,EC9,70514,93,Assessment/Plan
+P2,EC3,71919,108,Problem List/Past Medical History
+P2,EC9,70514,91,Review of Systems
+P2,EC9,70514,92,Physical Exam
+P2,EC4,70253,72,Medications
+P2,EC4,70253,73,Allergies
+P2,EC4,70253,74,Social History
+P2,EC4,70253,75,Family History
+P2,EC4,70253,76,Health Maintenance
+P2,EC6,70513,77,Chief Complaint
+P2,EC6,70513,78,History of Present Illness
+P2,EC6,70513,79,Physical Exam
+P2,EC6,70513,80,Assessment/Plan
+P2,EC3,71919,107,Assessment/Plan
+P2,EC6,70513,82,Problem List/Past Medical History
+P2,EC6,70513,83,Procedure/Surgical History
+P2,EC6,70513,84,Medications
+P2,EC6,70513,85,Allergies
+P2,EC6,70513,86,Social History
+P2,EC6,70513,87,Family History
+P2,EC6,70513,88,Health Maintenance
+P2,EC9,70514,89,Chief Complaint
+P2,EC6,70513,81,Patient Instructions
+P2,EC9,70514,90,History of Present Illness
+P3,EC1,920,270,Physical Exam
+P3,EC1,920,271,SBIRT
+P3,EC1,920,272,Assessment/Plan
+P3,EC1,920,273,Patient Instructions
+P3,EC1,920,277,Medications
+P3,EC1,920,275,Problem List/Past Medical History
+P3,EC1,920,276,Procedure/Surgical History
+P3,EC1,920,269,Review of Systems
+P3,EC1,920,278,Allergies
+P3,EC1,920,279,Social History
+P3,EC1,920,274,Attending Attestation
+P3,EC1,920,268,History of Present Illness
+P3,EC5,68,263,Allergies
+P3,EC5,68,266,Health Maintenance
+P3,EC5,68,265,Family History
+P3,EC5,68,264,Social History
+P3,EC5,68,262,Medications
+P3,EC5,68,261,Procedure/Surgical History
+P3,EC5,68,260,Problem List/Past Medical History
+P3,EC5,68,259,Attending Attestation
+P3,EC5,68,258,Patient Instructions
+P3,EC5,68,256,Physical Exam
+P3,EC5,68,255,Review of Systems
+P3,EC5,68,254,History of Present Illness
+P3,EC1,920,267,Chief Complaint
+P3,EC5,68,257,Assessment/Plan
+P3,EC1,920,281,Health Maintenance
+P3,EC1,920,280,Family History
+P4,EC7,1074,32,Problem List/Past Medical History
+P4,EC7,1074,36,Social History
+P4,EC7,1074,35,Allergies
+P4,EC7,1074,34,Medications
+P4,EC7,1074,33,Procedure/Surgical History
+P4,EC7,1074,31,Patient Instructions
+P4,EC7,1074,30,Assessment/Plan
+P4,EC7,1074,29,Physical Exam
+P4,EC7,1074,28,Review of Systems
+P4,EC7,1074,27,History of Present Illness
+P4,EC7,1074,26,Chief Complaint
+P4,EC7,1074,37,Family History
+P4,EC10,1286,25,Health Maintenance
+P4,EC10,1286,23,Social History
+P4,EC10,1286,22,Allergies
+P4,EC10,1286,21,Medications
+P4,EC10,1286,20,Procedure/Surgical History
+P4,EC10,1286,19,Problem List/Past Medical History
+P4,EC10,1286,18,Patient Instructions
+P4,EC10,1286,17,Assessment/Plan
+P4,EC10,1286,16,Physical Exam
+P4,EC10,1286,15,Review of Systems
+P4,EC10,1286,14,History of Present Illness
+P4,EC10,1286,13,Chief Complaint
+P4,EC10,1286,24,Family History
+P4,EC7,1074,38,Health Maintenance
+P5,EC11,492,64,Health Maintenance
+P5,EC11,492,58,Problem List/Past Medical History
+P5,EC11,492,61,Allergies
+P5,EC11,492,60,Medications
+P5,EC11,492,59,Procedure/Surgical History
+P5,EC11,492,57,Patient Instructions
+P5,EC11,492,56,Assessment/Plan
+P5,EC11,492,55,Medicare Wellness
+P5,EC11,492,54,Physical Exam
+P5,EC11,492,53,Review of Systems
+P5,EC11,492,52,History of Present Illness
+P5,EC11,492,62,Social History
+P5,EC11,492,51,Chief Complaint
+P5,EC11,492,63,Family History
+P6,EC15,1335,9,Allergies
+P6,EC15,1335,8,Medications
+P6,EC15,1335,7,Procedure/Surgical History
+P6,EC15,1335,6,Problem List/Past Medical History
+P6,EC15,1335,5,Patient Instructions
+P6,EC15,1335,4,Assessment/Plan
+P6,EC15,1335,11,Family History
+P6,EC15,1335,3,SBIRT
+P6,EC15,1335,2,Physical Exam
+P6,EC15,1335,1,History of Present Illness
+P6,EC15,1335,10,Social History
+P6,EC15,1335,0,Chief Complaint
+P6,EC15,1335,12,Health Maintenance
+P7,EC17,435,39,Chief Complaint
+P7,EC17,435,50,Health Maintenance
+P7,EC17,435,49,Family History
+P7,EC17,435,48,Social History
+P7,EC17,435,47,Allergies
+P7,EC17,435,46,Medications
+P7,EC17,435,45,Procedure/Surgical History
+P7,EC17,435,44,Problem List/Past Medical History
+P7,EC17,435,43,Assessment/Plan
+P7,EC17,435,42,Physical Exam
+P7,EC17,435,41,Review of Systems
+P7,EC17,435,40,History of Present Illness
