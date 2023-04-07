@@ -85,3 +85,142 @@ def _addindent(s_, numSpaces):
 
 
 
+def update_df_dataflow(df):
+    df_dataflow = df.copy()
+
+
+    for layer_idx in df_dataflow.columns:
+        # (1) first deal with the fld in each layer
+        s = df_dataflow[layer_idx]
+        current_fullrfg_list = s[-s.isna()].to_list()
+        fld_with_at = [i for i in current_fullrfg_list if '@' in i.split('-')[-1]]
+        fld_with_at_to_keep = []
+        fld_with_at_to_check = [i for i in fld_with_at if i not in fld_with_at_to_keep]
+        
+        while len(fld_with_at_to_check) > 0:
+            for index in df_dataflow.index:
+                full_recfldgrn = df_dataflow.loc[index, layer_idx]
+                if pd.isna(full_recfldgrn): continue
+                if full_recfldgrn == 'ToFill': continue
+                curfld = full_recfldgrn.split('-')[-1]
+                prefix = '-'.join(full_recfldgrn.split('-')[:-1])
+                headfld, tailfld = get_curfld_recinfo(curfld)
+                if headfld != None:
+                    full_recfldgrn_new = prefix + '-' + headfld
+                    same_rfg_new = [i for i in current_fullrfg_list if full_recfldgrn_new in i]
+                    if len(same_rfg_new) == 1:
+                        print(full_recfldgrn)
+                        df_dataflow.loc[index, layer_idx] = full_recfldgrn_new
+            
+            # update s for one iteration
+            s = df_dataflow[layer_idx]
+            current_fullrfg_list = s[-s.isna()].to_list()
+            fld_with_at = [i for i in current_fullrfg_list if '@' in i.split('-')[-1]]
+            fld_with_at_to_check = [i for i in fld_with_at if i not in fld_with_at_to_keep]
+            
+        print(f'Finish drop single @ fld in layer {layer_idx}')
+        
+            
+            
+        s = df_dataflow[layer_idx]
+        current_fullrfg_list = s[-s.isna()].to_list()
+        fld_with_at = [i for i in current_fullrfg_list if '@' in i.split('-')[-1]]
+        fld_with_at_to_check = [i for i in fld_with_at if i not in fld_with_at_to_keep]
+        
+        print('Current fld_with_at_to_check is:', fld_with_at_to_check)
+        
+        
+        while len(fld_with_at_to_check) > 0:
+            for index in df_dataflow.index:
+                full_recfldgrn = df_dataflow.loc[index, layer_idx]
+                if pd.isna(full_recfldgrn): continue
+                if full_recfldgrn == 'ToFill': continue
+                curfld = full_recfldgrn.split('-')[-1]
+                prefix = '-'.join(full_recfldgrn.split('-')[:-1])
+                headfld, tailfld = get_curfld_recinfo(curfld)
+                if headfld != None:
+                    full_recfldgrn_new = prefix + '-' + headfld
+                    same_rfg_new = [i for i in current_fullrfg_list if full_recfldgrn_new in i]
+                    if len(same_rfg_new) > 1:
+                        tailfld_merged = '&'.join([i.replace(full_recfldgrn_new +'@', '') for i in same_rfg_new])
+                        new_index = '(Merge)' + headfld + '@' + tailfld_merged
+                        # new_fldgrn = full_recfldgrn_new
+                        df_dataflow.loc[new_index, layer_idx] = full_recfldgrn_new
+                        fld_with_at_to_keep.extend(same_rfg_new)
+                        fld_with_at_to_keep.append(full_recfldgrn_new)
+                        # print(full_recfldgrn_new)
+                        # print(same_rfg_new)
+                        break
+        
+        if layer_idx == df_dataflow.columns[-1]: continue
+        # then update the next layer information
+        for index in df_dataflow.index:
+            last = df_dataflow.loc[index, layer_idx]
+            if pd.isna(last): continue
+            if '@' in last.split('-')[-1]: continue
+            full_recfldgrn_next = '-'.join(last.split('-')[:-1]) + '@' + last.split('-')[- 1]
+            df_dataflow.loc[index, layer_idx - 1] = full_recfldgrn_next
+            
+    return df_dataflow
+
+
+
+
+    
+
+
+def update_df_dataflow(df):
+    df_dataflow = df.copy()
+
+
+    for layer_idx in df_dataflow.columns:
+        
+        # (1) first deal with the fld in each layer
+        s = df_dataflow[layer_idx]
+        current_fullrfg_list = s[-s.isna()].to_list()
+        fld_with_at = [i for i in current_fullrfg_list if '@' in i.split('-')[-1]]
+        fld_with_at_to_keep = []
+        fld_with_at_to_check = [i for i in fld_with_at if i not in fld_with_at_to_keep]
+        
+        while len(fld_with_at_to_check) > 0:
+            for index in df_dataflow.index:
+                full_recfldgrn = df_dataflow.loc[index, layer_idx]
+                if pd.isna(full_recfldgrn): continue
+                if full_recfldgrn == 'ToFill': continue
+                curfld = full_recfldgrn.split('-')[-1]
+                prefix = '-'.join(full_recfldgrn.split('-')[:-1])
+                headfld, tailfld = get_curfld_recinfo(curfld)
+                if headfld != None:
+
+                    full_recfldgrn_new = prefix + '-' + headfld
+                    
+                    
+                    same_rfg_new = [i for i in current_fullrfg_list if full_recfldgrn_new in i]
+                    
+                    if len(same_rfg_new) == 1:
+                        print(full_recfldgrn)
+                        df_dataflow.loc[index, layer_idx] = full_recfldgrn_new
+
+
+                    elif len(same_rfg_new) > 1:
+                        tailfld_merged = '&'.join([i.replace(full_recfldgrn_new +'@', '') for i in same_rfg_new])
+                        new_index = '(Merge)' + headfld + '@' + tailfld_merged
+                        # new_fldgrn = full_recfldgrn_new
+                        df_dataflow.loc[new_index, layer_idx] = full_recfldgrn_new
+                        fld_with_at_to_keep.extend(same_rfg_new)
+                        fld_with_at_to_keep.append(full_recfldgrn_new)
+                        # print(full_recfldgrn_new)
+                        # print(same_rfg_new)
+                        # break
+                    
+        
+        if layer_idx == df_dataflow.columns[-1]: continue
+        # then update the next layer information
+        for index in df_dataflow.index:
+            last = df_dataflow.loc[index, layer_idx]
+            if pd.isna(last): continue
+            if '@' in last.split('-')[-1]: continue
+            full_recfldgrn_next = '-'.join(last.split('-')[:-1]) + '@' + last.split('-')[- 1]
+            df_dataflow.loc[index, layer_idx - 1] = full_recfldgrn_next
+            
+    return df_dataflow

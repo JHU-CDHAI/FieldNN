@@ -51,7 +51,3 @@ class MergerLayer(torch.nn.Module):
     def forward(self, tensor_list, order = -2):
         info = torch.cat([i.unsqueeze(order) for i in tensor_list], order)
         return info   
-
-
-def gelu(x):
-    return 0.5 * x * (1 + torch.tanh(math.sqrt(2 / math.pi) * (x + 0.044715 * torch.pow(x, 3))))
