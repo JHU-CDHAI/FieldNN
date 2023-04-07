@@ -5,7 +5,7 @@ Field2Grain_2_get_GrnWgtList_Fn = {}
 
 ## ------------------------------------(categorical)------------------------------------
 ###### P Rec
-fld2grn = 'P@basicInfo-basicInfoDftGrn'
+fld2grn = 'P@basicInfo-basicInfoDftGrn' # matching to the real data. 
 from .cate.ptdemo_grn import get_basicInfoGrn_list
 Field2Grain_2_get_GrnStrList_Fn[fld2grn] = get_basicInfoGrn_list
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: [v2idx.get(i) for i in get_basicInfoGrn_list(x)]
@@ -61,7 +61,7 @@ Field2Grain_2_get_GrnStrList_Fn[fld2grn] = func_convert_DTgrn
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: [v2idx.get(i) for i in func_convert_DTgrn(x)]
 
 ###### PN Rec
-fld2grn = 'PN@DT-DTDftGrn'
+fld2grn = 'PN@DT-DTDftGrn' # DTDftGrn, DT: datetime, Dft: default, Grn: Grain
 from .misc.dt_grn import func_convert_DTgrn
 Field2Grain_2_get_GrnStrList_Fn[fld2grn] = func_convert_DTgrn
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: [v2idx.get(i) for i in func_convert_DTgrn(x)]
@@ -80,10 +80,15 @@ from .nume.a1c_grn import func_convert_A1Cwgt
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, v2idx: list(range(len(v2idx)))
 Field2Grain_2_get_GrnWgtList_Fn[fld2grn] = func_convert_A1Cwgt
 
-
 ## ------------------------------------(textual)------------------------------------
 ###### PNSectSent Rec
-fld2grn = 'PNSectSent@Sentence-Tk@TknzLLMGrn'
+fld2grn = 'PNSectSent@Sentence-Tk@TknzLLMGrn' # Tk: Token, Tknz, Tokenizer from huggingface. LLM: large language model. 
 from .text.tkllm_grn import func_convert_SentTkLLM
 Field2Grain_2_get_GrnIdxList_Fn[fld2grn] = lambda x, tokenizer: func_convert_SentTkLLM(x, tokenizer)
 
+def display_all_flgrn_function(Field2Grain_2_get_GrnWgtList_Fn):
+    for fld2grn in Field2Grain_2_get_GrnWgtList_Fn:
+        recfld, grn = fld2grn.split('-') # '-', increase of dimension.
+        rec, fld = recfld.split('@') # '@', dimension, attribute, field.
+        print(f'Record Name is {rec}, Field Name is {fld}, Available Grain is{grn}')
+    

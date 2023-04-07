@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 def func_convert_Num_factory(start, end, Min, Max, scale):
+    
     def func_convert_NUMgrn(v):
     
         miss, more, less, bottom, top = 0, 0, 0, 0, 0; base = 1

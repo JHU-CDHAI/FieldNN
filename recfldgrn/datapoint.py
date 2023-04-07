@@ -26,7 +26,6 @@ def get_df_rec(attr, path, old_columns, new_columns):
     return df
 
 
-
 def convert_PID_to_PIDgroup(x, RANGE_SIZE):
     int_value = int(x.replace('P', ''))
     range_size = RANGE_SIZE
@@ -79,20 +78,28 @@ def get_dfx_from_buffer(PID, DataName, data_folder, RANGE_SIZE, BUCKET_buffer):
 
 
 class PatientDP(object):
+
+    '''
+    PatientDP: stands for the Patient Data Points. 
+
+    one instance is a patient.
+
+    the instance of the patient could quickly the his/her record information by using `get_df_rec`.
+
+    '''
     BUCKET_buffer = {}
-    
-    
+
     def __init__(self, PID, data_folder, RANGE_SIZE):
         self.PID = PID
         self.data_folder = data_folder
         self.df_rec_dict = {}
         self.RANGE_SIZE = RANGE_SIZE
         
-        
     def get_df_rec(self, DataName):
+        '''
+        DataName: the name of the record, like: P, EC, BMI, PN, PNSect, etc.
+        '''
         if DataName not in self.df_rec_dict:
-           # df = load_field_data(self.PID, DataName, self.data_folder)
-            
             dfx, BUCKET_buffer = get_dfx_from_buffer(self.PID, DataName, 
                                                      self.data_folder, 
                                                      self.RANGE_SIZE, 
