@@ -15,7 +15,81 @@ def traverse(o, tree_types=(list, tuple, np.ndarray), index = None, nest_layer =
         else:
             length = len(o)
         yield index, length, o
-        
+
+
+
+def convert_relational_list_to_numpy(values_list, new_full_recfldgrn, suffix):
+    o = values_list
+    layer_num = len(new_full_recfldgrn.split('-'))
+    layers = new_full_recfldgrn.replace(suffix, '').split('-')
+    # L = [len(values_list)] 
+
+    D = {}
+
+    # (1) from first layer: 0
+    idx = 0
+    layer_parents = layers[:idx + 1]
+    layer_children = layers[idx + 1]
+    len_name = f'{"2".join(layer_parents)}_ln{layer_children}'
+    len_np = np.array(len(values_list))
+    len_shapes = [len_np.max()] # from layer 0, prepare for layer 1. 
+    D[len_name] = len_np
+
+    # (2) from 1 - last one layers
+    for idx in range(1, layer_num - 1):
+        output = list(traverse(o, nest_layer = idx))
+        # print(output)
+        # data = np.zeros(L)
+        # print('\n\n')
+        # print(idx)
+        # print(output)
+
+        layer_parents = layers[:idx + 1]
+        layer_children = layers[idx + 1]
+        len_name = f'{"-".join(layer_parents)}_ln{layer_children}'
+        # print(len_name)
+
+        locidx  = [i[0] for i in output]
+        length = [i[1] for i in output]
+        # values = [i[2] for i in output]
+
+        len_np = np.zeros(len_shapes).astype(int)
+        # print(len_np.shape, '<---- len_np.shape')
+        for locidx, length, _ in output:
+            len_np[tuple(locidx)] = int(length)
+        # print(len_np)
+        len_shapes.append(len_np.max())
+        # print(len_shapes, '<---- next len_np.shape')
+        # print(length)
+        # print()
+        D[len_name] = len_np
+
+    # (3) for the data
+    idx = layer_num
+    name = new_full_recfldgrn
+    data = np.zeros(len_shapes) # don't convert it to int for now. 
+    output = list(traverse(o, nest_layer = idx))
+    for locidx, _, value in output:
+        data[tuple(locidx)] = value
+        # print(locidx, value)
+        # print(data[tuple(locidx)])# = value
+    data.shape
+    D[name] = data.astype(int)
+    
+    return D
+
+
+   
+def parse_full_recfldgrn(full_recfldgrn):
+    # suffix = full_recfldgrn.split('_')[-1]
+    recfld = [i for i in full_recfldgrn.split('-') if '@' in i][0]
+    rec, fld = recfld.split('@')
+    grn_suffix = [i for i in full_recfldgrn.split('-') if 'Grn' in i][0]
+    grn, suffix = grn_suffix.split('_')
+    prefix_ids = [i for i in full_recfldgrn.split('-') if 'Grn' not in i and '@' not in i]
+    return prefix_ids, rec, fld, grn, suffix
+
+
 
 def get_Layer2Holder(fullname, holder, Ignore_PSN_Layers = ['B', 'P']):
     # holder = holder
