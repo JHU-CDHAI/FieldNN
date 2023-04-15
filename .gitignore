@@ -18,3 +18,5 @@ __pycache__/*
 # *.p
 */L2
 .DS_Store
+
+desktop.ini
