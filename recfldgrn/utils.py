@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import os
 
-############## <s>
 def generate_grain_vocab_info(s):
     '''
         s: a Series (or a column of a dataframe) of all rec@fld value's grain_list.
@@ -22,7 +21,6 @@ def generate_grain_vocab_info(s):
     v2idx = {v:k for k, v in idx2v.items()}
     
     return {'idx2v': idx2v, 'v2idx': v2idx, 'v2freq': v2freq}
-############## <e>
 
 
 def get_compressed_df(df_rec, full_recfldgrn_name, prefix_ids):
@@ -94,6 +92,3 @@ def get_highorder_input_idx(df, recfield2grain,
 
     df_p = df_Rec.reset_index(drop = True) # p: patient.
     return df_p
-
-
-
