@@ -2,7 +2,6 @@ import torch
 import numpy as np
 
 
-
 def traverse(o, tree_types=(list, tuple, np.ndarray), index = None, nest_layer = 100):
     if isinstance(o, tree_types) and nest_layer > 0:
         for idx, value in enumerate(o):
