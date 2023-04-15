@@ -1,10 +1,9 @@
+# fieldlm.nn.embedding
 import os
 import torch
 import numpy as np
 
-# just the same as the CateEmbeddingLayer
-
-class NumEmbeddingLayer(torch.nn.Module):
+class CateEmbeddingLayer(torch.nn.Module):
 
     def __init__(self, 
                  vocab_size, 
@@ -12,7 +11,7 @@ class NumEmbeddingLayer(torch.nn.Module):
                  init = 'random', 
                  freeze = False):
         
-        super(NumEmbeddingLayer, self).__init__()
+        super(CateEmbeddingLayer, self).__init__()
         
         # create embedding
         if init == 'random':

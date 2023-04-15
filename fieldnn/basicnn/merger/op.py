@@ -19,7 +19,7 @@ class ReduceMeanLayer(torch.nn.Module):
         leng = (leng_mask == 0).sum(-1).unsqueeze(-1).float()
         leng[leng == 0.] = 1.0 # change pad to any non-zeros to be dominators.
         info = torch.sum(info, -2) # (bs, xxx, l, dim) --> (bs, xxx, dim)
-        info = info/leng    # (bs, xxx, dim)    --> (bs, xxx, dim)
+        info = info/leng           # (bs, xxx, dim)    --> (bs, xxx, dim)
         return info
 
 class RecuderMaxLayer(torch.nn.Module):
@@ -27,13 +27,10 @@ class RecuderMaxLayer(torch.nn.Module):
         super(RecuderMaxLayer, self).__init__()
 
     def forward(self, info, leng_mask):
-        a, b = info.max(-2)
-        # l, dim = info.shape[-2:]
-        # info = torch.transpose(info, -1, 1).contiguous()
-        # info = F.max_pool1d(info, l).squeeze()
+        info = info.masked_fill(leng_mask.unsqueeze(-1), -10000) # double check this.
+        a, b = info.max(-2) # not necessary, all the values could be smaller than 0.
         return a
     
-
 class ConcatenateLayer(torch.nn.Module):
     def __init__(self):
         super(ConcatenateLayer, self).__init__()
@@ -42,7 +39,6 @@ class ConcatenateLayer(torch.nn.Module):
         l, dim = info.shape[-2:]
         info = info.view(*info.shape[:-2],  l*dim)
         return info   
-
 
 class MergerLayer(torch.nn.Module):
     def __init__(self):
