@@ -51,7 +51,7 @@ def write_df_to_folders(DataName, data_folder, df):
 def load_df_data_from_folder(data_folder):
     file_list = os.listdir(data_folder)
     # file_lis
-    df = pd.concat([pd.read_pickle(os.path.join(data_folder, i)) for i in file_list]).reset_index(drop = True)
+    df = pd.concat([pd.read_pickle(os.path.join(data_folder, i)) for i in file_list if '.p' in i]).reset_index(drop = True)
     return df# .shape
 
 
