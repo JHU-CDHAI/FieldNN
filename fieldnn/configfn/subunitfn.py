@@ -6,18 +6,51 @@ from .mergerfn import get_merger_para
 # from .expanderfn import get_expander_para
 
 
-def mapping_SubUnitName_to_SubUnitNNList(SubUnitName, default_BasicNNtype_To_NNName):
+############################################# Hyperparameters
+default_BasicNNtype_To_NNName = {
+    'expander': None, # will be updated according to the Grn Type
+    'reducer': 'Max',
+    'merger': 'Merger',
+    'learner': None, # TODO: ignore this currently
+    
+}
+#############################################
+
+def mapping_SubUnitName_to_SubUnitNNList(SubUnitName, input_names, 
+                                         default_BasicNNtype_To_NNName):
     SubUnitNNList = []
     for NAME in SubUnitName:
-        if NAME == 'R':
+        if NAME == 'E':
+            nn_type = 'expander'
+            input_name = input_names[0]
+            
+            assert 'Grn' in input_name
+            assert len(input_names) == 1
+            
+            if 'Tknz' in input_name:
+                nn_name = 'LLMEmbed'
+            elif '_wgt' in input_name:
+                nn_name = 'NumeEmbed'
+            else:
+                nn_name = 'CateEmbed'
+            
+        elif NAME == 'R':
+            assert len(input_names) == 1
             nn_type = 'reducer'
+            nn_name = default_BasicNNtype_To_NNName[nn_type]
+            
         elif NAME == 'M':
             nn_type = 'merger'
+            nn_name = default_BasicNNtype_To_NNName[nn_type]
+            
         elif NAME == 'L':
-            nn_type = 'rearner'
-        elif NAME == 'E':
-            nn_type = 'expander'
-        nn_name = default_BasicNNtype_To_NNName[nn_type]
+            assert len(input_names) == 1
+            nn_type = 'learner'
+            nn_name = default_BasicNNtype_To_NNName[nn_type]
+            
+        else:
+            raise ValueError(f'The BasicNN is not correct {NAME}')
+        
         SubUnitNNList.append(nn_type + '-' + nn_name)
     return SubUnitNNList
 
