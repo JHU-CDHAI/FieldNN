@@ -2,8 +2,6 @@ import os
 import torch
 import numpy as np
 
-# just the same as the CateEmbeddingLayer
-
 class NumeEmbeddingLayer(torch.nn.Module):
 
     def __init__(self, 

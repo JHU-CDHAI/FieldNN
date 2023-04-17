@@ -1,7 +1,15 @@
 import torch
 
-from ..nn.operator.op import ReduceMeanLayer, ReduceSumLayer, RecuderMaxLayer, ConcatenateLayer
-# from fieldnn.nn.operator.op import ReduceMeanLayer, ReduceSumLayer, RecuderMaxLayer, ConcatenateLayer
+# from fieldnn.basicnn.reducer.rdcmean import ReduceMeanLayer
+# from fieldnn.basicnn.reducer.rdcsum import ReduceSumLayer
+# from fieldnn.basicnn.reducer.rdcmax import RecuderMaxLayer
+# from fieldnn.basicnn.reducer.rdccat import ConcatenateLayer
+
+from .rdcmean import ReduceMeanLayer
+from .rdcsum import ReduceSumLayer
+from .rdcmax import RecuderMaxLayer
+from .rdccat import ConcatenateLayer
+
 
 class Reducer_Layer(torch.nn.Module):
     def __init__(self, input_names_nnlvl, output_name_nnlvl, reducer_layer_para):

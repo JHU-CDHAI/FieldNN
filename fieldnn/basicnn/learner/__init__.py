@@ -2,13 +2,13 @@ import os
 import torch
 import numpy as np
 
-from ..nn.rnn import RNNLayer
-from ..nn.cnn import CNNLayer
-from ..nn.tfm import TFMLayer
-from ..nn.linear import LinearLayer
-from ..nn.embedding import EmbeddingLayer
-from ..utils.layerfn import orderSeq, restoreSeq, align_psn_idx, get_Layer2Holder
-from ..utils.parafn import generate_psn_embed_para
+# from ..nn.rnn import RNNLayer
+# from ..nn.cnn import CNNLayer
+# from ..nn.tfm import TFMLayer
+# from ..nn.linear import LinearLayer
+# from ..nn.embedding import EmbeddingLayer
+# from ..utils.layerfn import orderSeq, restoreSeq, align_psn_idx, get_Layer2Holder
+# from ..utils.parafn import generate_psn_embed_para
 
 # from fieldnn.nn.rnn import RNNLayer
 # from fieldnn.nn.cnn import CNNLayer
