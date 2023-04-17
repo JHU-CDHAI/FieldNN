@@ -77,18 +77,25 @@ def convert_relational_list_to_numpy(values_list, new_full_recfldgrn, suffix):
     
     return D
 
+def orderSeq(seq_unordered, leng_unordered):
+    # leng_unordered is a tensor
+    # seq_unordered is a numpy
+    leng_ordered, seq_index = leng_unordered.sort(descending=True) 
+    _, reverse_index = seq_index.sort()
+    leng_ordered = leng_ordered[leng_ordered>0]
+    seq_index    = seq_index[:len(leng_ordered)]
+    seq_ordered  = seq_unordered[seq_index.cpu()]
+    return seq_ordered, leng_ordered, reverse_index
 
-   
-def parse_full_recfldgrn(full_recfldgrn):
-    # suffix = full_recfldgrn.split('_')[-1]
-    recfld = [i for i in full_recfldgrn.split('-') if '@' in i][0]
-    rec, fld = recfld.split('@')
-    grn_suffix = [i for i in full_recfldgrn.split('-') if 'Grn' in i][0]
-    grn, suffix = grn_suffix.split('_')
-    prefix_ids = [i for i in full_recfldgrn.split('-') if 'Grn' not in i and '@' not in i]
-    return prefix_ids, rec, fld, grn, suffix
 
-
+def restoreSeq(seq_ordered, reverse_index):
+    # shape = list(seq_ordered.shape)
+    data_type = seq_ordered.type()
+    shape = list(seq_ordered.shape)
+    shape[0] = len(reverse_index) - shape[0]
+    t = torch.cat([seq_ordered, torch.zeros(shape).type(data_type)])
+    seq_restored = t[reverse_index]
+    return seq_restored
 
 def get_Layer2Holder(fullname, holder, Ignore_PSN_Layers = ['B', 'P']):
     # holder = holder
@@ -127,28 +134,3 @@ def align_psn_idx(source_layer, current_layer, Layer2Idx, Layer2Holder):
         psn_idx = source_psn_idx.view(*shape0).expand(shape1).masked_fill(current_leng_mask, 0)
         # print(cpsn_idx.shape)
         return psn_idx
-
-
-def orderSeq(seq_unordered, leng_unordered):
-    # leng_unordered is a tensor
-    # seq_unordered is a numpy
-    leng_ordered, seq_index = leng_unordered.sort(descending=True) 
-    _, reverse_index = seq_index.sort()
-    leng_ordered = leng_ordered[leng_ordered>0]
-    seq_index    = seq_index[:len(leng_ordered)]
-    seq_ordered  = seq_unordered[seq_index.cpu()]
-    return seq_ordered, leng_ordered, reverse_index
-
-
-def restoreSeq(seq_ordered, reverse_index):
-    # shape = list(seq_ordered.shape)
-    data_type = seq_ordered.type()
-    shape = list(seq_ordered.shape)
-    shape[0] = len(reverse_index) - shape[0]
-    t = torch.cat([seq_ordered, torch.zeros(shape).type(data_type)])
-    seq_restored = t[reverse_index]
-    return seq_restored
-
-
-
-    
