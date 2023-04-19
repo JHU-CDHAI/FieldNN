@@ -161,7 +161,11 @@ def update_df_Repr_dataflow_completename(df):
     return df_dataflow_filled
 
 
-def get_Repr_SubUnit_List(df_dataflow):
+
+def get_Repr_SubUnit_List(df_dataflow, 
+                          default_R_subunit_name = 'RL', 
+                          default_MR_subunit_name = 'MRL', # or 'MLRL'
+                         ):
     layeridx_list = list(df_dataflow.columns)
     
     SubUnit_List = []
@@ -191,7 +195,7 @@ def get_Repr_SubUnit_List(df_dataflow):
             if pd.isna(output_name) == True: continue # pass it. 
 
             d = {}
-            d['SubUnitName'] = 'R'
+            d['SubUnitName'] = default_R_subunit_name
             d['input_names'] = [input_name]
             d['output_name'] = output_name
             
@@ -213,7 +217,7 @@ def get_Repr_SubUnit_List(df_dataflow):
             # print(output_tensor, ':', input_tensors)
 
             d = {}
-            d['SubUnitName'] = 'MR'
+            d['SubUnitName'] = default_MR_subunit_name
             d['input_names'] = input_tensors
             d['output_name'] = output_tensor
             

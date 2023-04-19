@@ -1,11 +1,12 @@
 import os
 import pandas as pd
 
-def get_EmbeddingBlock_DataFlow(full_recfldgrn_list, default_SubUnitName = 'E'):
+
+def get_EmbeddingBlock_SubUnit(full_recfldgrn_list, default_E_subunit_name = 'E'):
     SubUnit_List = []
     for input_name in full_recfldgrn_list:
         d = {}
-        d['SubUnitName'] = 'E'
+        d['SubUnitName'] = default_E_subunit_name
         
         recfldgrn = '-'.join(input_name.split('-')[-2:])
         output_layerid = len(input_name.split('-'))
