@@ -29,7 +29,7 @@ def convert_relational_list_to_numpy(values_list, new_full_recfldgrn, suffix):
     idx = 0
     layer_parents = layers[:idx + 1]
     layer_children = layers[idx + 1]
-    len_name = f'{"2".join(layer_parents)}_ln{layer_children}'
+    len_name = f'{"-".join(layer_parents)}@ln{layer_children}'
     len_np = np.array(len(values_list))
     len_shapes = [len_np.max()] # from layer 0, prepare for layer 1. 
     D[len_name] = len_np
@@ -45,7 +45,7 @@ def convert_relational_list_to_numpy(values_list, new_full_recfldgrn, suffix):
 
         layer_parents = layers[:idx + 1]
         layer_children = layers[idx + 1]
-        len_name = f'{"-".join(layer_parents)}_ln{layer_children}'
+        len_name = f'{"-".join(layer_parents)}@ln{layer_children}'
         # print(len_name)
 
         locidx  = [i[0] for i in output]
