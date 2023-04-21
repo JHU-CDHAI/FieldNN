@@ -7,6 +7,7 @@ class EmbedBlockLayer(torch.nn.Module):
     def __init__(self, df_SubUnit):
         super(EmbedBlockLayer, self).__init__()
         self.df_SubUnit = df_SubUnit
+        
         self.SubUnitDict = torch.nn.ModuleDict()
         
         for idx, SubUnit_info in df_SubUnit.iterrows():
