@@ -1,3 +1,4 @@
+
 def get_merger_para(nn_name, nn_para, input_size, output_size, postprocess):
     para = {}
     para['nn_type'] = 'merger'
