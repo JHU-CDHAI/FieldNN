@@ -217,6 +217,7 @@ def generate_BasicNN_Config(nn_type_nn_name,
 # from fieldnn.configfn.learnerfn import get_learner_para
 
 
+
 def generate_BasicNN_Config(nn_type_nn_name, 
                             input_names_nnlvl, 
                             default_nnpara, 
@@ -230,7 +231,7 @@ def generate_BasicNN_Config(nn_type_nn_name,
     if nn_type == 'expander':
         
         assert len(input_names_nnlvl) == 1
-        fld = input_names_nnlvl[0].split('-')[-1]
+        # fld = input_names_nnlvl[0].split('-')[-1]
         # Get the output_name_nnlvl
         output_name_nnlvl = input_names_nnlvl[0].split('Grn')[0]
         
@@ -242,10 +243,10 @@ def generate_BasicNN_Config(nn_type_nn_name,
         postprocess = process
         
         # Derive the para
-        vocab_tokenizer = default_nnpara['vocab_tokenizer']
-        init = default_nnpara['init']
-        para = get_expander_para(nn_name, default_nnpara, 
-                                 embed_size, vocab_tokenizer, init, postprocess)
+        full_recfldgrn = default_nnpara['full_recfldgrn']
+        Info = default_nnpara['Info']
+        # para = get_expander_para(nn_name, default_nnpara, embed_size, vocab_tokenizer, init, postprocess)
+        para = get_expander_para(full_recfldgrn, Info, embed_size, postprocess)
 
     elif nn_type == 'reducer': 
         

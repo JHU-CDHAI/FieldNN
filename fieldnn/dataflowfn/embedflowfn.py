@@ -28,26 +28,26 @@ def get_Default_ExpanderNNPara(full_recfldgrn, fldgrn_folder):
     
     # (1) get basic information
     recfld = [i for i in full_recfldgrn.split('-') if '@' in i][0]
-    rec, fld = recfld.split('@')
-    grn_suffix = [i for i in full_recfldgrn.split('-') if 'Grn' in i][0]
-    grn, suffix = grn_suffix.split('_')
-    prefix_ids = [i for i in full_recfldgrn.split('-') if 'Grn' not in i and '@' not in i]
-    recfldgrn = rec + '@' + fld + '-' + grn
+    # rec, fld = recfld.split('@')
+    # grn_suffix = [i for i in full_recfldgrn.split('-') if 'Grn' in i][0]
+    # grn, suffix = grn_suffix.split('_')
+    # prefix_ids = [i for i in full_recfldgrn.split('-') if 'Grn' not in i and '@' not in i]
+    # recfldgrn = rec + '@' + fld + '-' + grn
 
     # (2) get vocab information
     # fldgrn_folder = 'data/ProcData/FldGrnInfo'
-    fullfldgrn_file = os.path.join(fldgrn_folder, rec + '.p')
-    df_FieldGrainInfo = pd.read_pickle(fullfldgrn_file)
+    fullfldgrn_file = os.path.join(fldgrn_folder, full_recfldgrn[2:] + '.p')
+    Info = pd.read_pickle(fullfldgrn_file)
 
 
     # (3) get vocab information
     # no matter what type of grain, in the end, we will have vocab_tokenizer.
-    if 'LLM' in full_recfldgrn:
-        vocab_tokenizer = df_FieldGrainInfo[df_FieldGrainInfo['recfield2grain'] == recfldgrn].iloc[0]['Vocab']['v2idx']
-        init = vocab_tokenizer.name_or_path
-    else:
-        vocab_tokenizer = df_FieldGrainInfo[df_FieldGrainInfo['recfield2grain'] == recfldgrn].iloc[0]['Vocab']['v2idx']
-        init = 'random'
+    # if 'LLM' in full_recfldgrn:
+    #     vocab_tokenizer = df_FieldGrainInfo[df_FieldGrainInfo['recfield2grain'] == recfldgrn].iloc[0]['Vocab']['v2idx']
+    #     init = vocab_tokenizer.name_or_path
+    # else:
+    #     vocab_tokenizer = df_FieldGrainInfo[df_FieldGrainInfo['recfield2grain'] == recfldgrn].iloc[0]['Vocab']['v2idx']
+    #     init = 'random'
 
-    d = {'vocab_tokenizer': vocab_tokenizer, 'init': init}
+    d = {'full_recfldgrn': full_recfldgrn, 'Info': Info}
     return d
