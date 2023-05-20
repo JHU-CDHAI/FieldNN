@@ -1,9 +1,10 @@
 import torch
+import pytorch_lightning as pl
 from .embedblock import EmbedBlockLayer
 from .reprblock import ReprBlockLayer
 
 
-class PatientLevelPredictionModel(torch.nn.Module):
+class RecModelPL(pl.LightningModule):
     """ Naive softmax-layer """
     def __init__(self, df_Embed_SubUnit, df_Repr_SubUnit, 
                  actn_fn_name, loss_fn_name,
@@ -19,7 +20,7 @@ class PatientLevelPredictionModel(torch.nn.Module):
             output_size: the output dim size. if actn_fn is softmax, then label sets. if actn_fn is sigmoid, then 1. 
             
         '''
-        super(PatientLevelPredictionModel, self).__init__()
+        super(RecModelPL, self).__init__()
         
         self.output_name = output_name
         
@@ -54,27 +55,13 @@ class PatientLevelPredictionModel(torch.nn.Module):
 
     def get_REPR_TENSOR(self, batch_rfg):
         # get the full_recfldgrn_list
-        full_recfldgrn_list = [i for i in batch_rfg]
+        full_recfldgrn_list = list(set([i.split('_')[0] for i in batch_rfg]))
 
         # prepare RECFLD_TO_TENSOR
+        # Prepare the Input
         RECFLD_TO_TENSOR = {}
         for full_recfldgrn in full_recfldgrn_list:
-            # (1) get the info_raw from batch_rfg
-            info_raw = batch_rfg[full_recfldgrn]
-
-            # (2) get the holder (input_idx) and holder_wgt (for nume embedding only)
-            if '_idx' in full_recfldgrn:
-                holder_wgt = 'Empty'
-                holder = torch.LongTensor(info_raw)
-            elif '_wgt' in full_recfldgrn:
-                holder_wgt = torch.FloatTensor(info_raw)
-                # ATTENTION: here holder_wgt could contain zeros in some valid positions.
-                holder = torch.ones_like(holder_wgt).cumsum(-1).masked_fill(holder_wgt == 0, 0).long()
-            else:
-                raise ValueError(f'Invalid full_recfldgrn "{full_recfldgrn}"')
-
-            info_dict = {'holder': holder, 'holder_wgt': holder_wgt}
-            RECFLD_TO_TENSOR[full_recfldgrn] = info_dict
+            RECFLD_TO_TENSOR[full_recfldgrn] = {k: v for k, v in batch_rfg.items() if full_recfldgrn in k}
     
         # get RECLD_TO_EMBEDTENSOR from RECFLD_TO_TENSOR and EmbedBlock
         RECFLD_TO_EMBEDTESNOR = self.EmbedBlock(RECFLD_TO_TENSOR)
@@ -126,3 +113,24 @@ class PatientLevelPredictionModel(torch.nn.Module):
         
         probs = self.actn_fn(outputvecs) 
         return probs
+    
+    
+    def training_step(self, batch, batch_idx):
+        batch_rfg, batch_targets = batch
+        loss = self.loss_funciton(batch_rfg, batch_targets)
+        return loss
+
+    def validation_step(self, batch, batch_idx):
+        self._shared_eval(batch, batch_idx, "val")
+
+    def test_step(self, batch, batch_idx):
+        self._shared_eval(batch, batch_idx, "test")
+
+    def _shared_eval(self, batch, batch_idx, prefix):
+        batch_rfg, batch_targets = batch
+        loss = self.loss_funciton(batch_rfg, batch_targets)
+        self.log(f"{prefix}_loss", loss)
+        
+    def configure_optimizers(self):
+        optimizer = torch.optim.Adam(self.parameters(), lr=1e-3)
+        return optimizer

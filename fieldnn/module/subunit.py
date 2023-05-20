@@ -32,7 +32,7 @@ class SubUnit_Layer(torch.nn.Module):
         
         # initialize all the BasicNN for this SubUnit.
         for idx, BasicNN_Config_Dict in enumerate(self.SubUnit_BasicNN_Config_List):
-            
+            # print(BasicNN_Config_Dict)
             # nn_type_nn_name: like reducer-Max, learner-TFM, merger-Merger, expander-llmembed.
             nn_type_nn_name = BasicNN_Config_Dict['nn_type_nn_name']
             
@@ -44,6 +44,15 @@ class SubUnit_Layer(torch.nn.Module):
                 
             if 'expander' in nn_type_nn_name:
                 expander_para = Basic_Config['expander_para']
+                # print('\n')
+                # print(expander_para)
+                # print(input_names_nnlvl)
+                # print(output_name_nnlvl)
+                assert len(input_names_nnlvl) == 1
+                # full_recfldgrn = input_names_nnlvl[0]
+                # input_names_nnlvl = [i for i in expander_para if full_recfldgrn in i]
+                # input_names_nnlvl = input_names_nnlvl if expander_para['use_wgt'] == False else input_names_nnlvl + [f'{full_recfldgrn}_wgt']
+                
                 NN = Expander_Layer(input_names_nnlvl, output_name_nnlvl, expander_para)
                 self.LayersDict[f'{idx}_{nn_type_nn_name}'] = NN
                 
