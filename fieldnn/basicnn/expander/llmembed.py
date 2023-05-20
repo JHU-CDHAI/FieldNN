@@ -43,6 +43,7 @@ class LLMEmbeddingLayer(torch.nn.Module):
         # expanding by the HuggingFace Language Model
         
         # 3.1 we might want to freeze LLM here
+        # print(ord_holder.shape, '<--- ord_holder.shape')
         output = self.LLM(ord_holder)
         # 3.2 adjust the hidden dimension
         ord_info_output = output['last_hidden_state']
@@ -72,8 +73,6 @@ class LLMEmbeddingLayer(torch.nn.Module):
         ord_holder,    ord_leng, r_idx = orderSeq(tmp_holder, tmp_leng)
         ord_leng_mask, ord_leng, r_idx = orderSeq(tmp_leng_mask, tmp_leng)
         return ord_holder, ord_leng_mask, r_idx
-    
-    
     
     def restore(self, ord_info_output, leng_mask, r_idx):
         info_new = restoreSeq(ord_info_output, r_idx)
