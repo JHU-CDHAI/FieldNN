@@ -15,8 +15,6 @@ def traverse(o, tree_types=(list, tuple, np.ndarray), index = None, nest_layer =
             length = len(o)
         yield index, length, o
 
-
-
 def convert_relational_list_to_numpy(values_list, new_full_recfldgrn, suffix):
     o = values_list
     layer_num = len(new_full_recfldgrn.split('-'))
