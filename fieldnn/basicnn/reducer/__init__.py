@@ -8,7 +8,7 @@ import torch
 from .rdcmean import ReduceMeanLayer
 from .rdcsum import ReduceSumLayer
 from .rdcmax import RecuderMaxLayer
-from .rdccat import ConcatenateLayer
+from .rdccat import ReduceConcatLayer
 
 
 class Reducer_Layer(torch.nn.Module):
@@ -17,7 +17,6 @@ class Reducer_Layer(torch.nn.Module):
         
         # Part 0: Meta
         # here input_names and out_tensor just the tensor name, 
-        # they are not the real tensors
         # intead, the info_dict contains the corresponding real tensors.
         assert len(input_names_nnlvl) == 1
         self.input_names_nnlvl = input_names_nnlvl
@@ -25,22 +24,21 @@ class Reducer_Layer(torch.nn.Module):
         
         # output_name should be generated from the input_names
         self.output_name_nnlvl = output_name_nnlvl
-        # self.output_name = output_name
-
+        
         # the input feature dim size and output feature dim size
         self.input_size = reducer_layer_para['input_size']
         self.output_size = reducer_layer_para['output_size']
 
         # Part 1: NN
         nn_name, nn_para = reducer_layer_para['nn_name'], reducer_layer_para['nn_para']
-        if nn_name.lower() == 'mean':
+        if nn_name.lower() == 'reducemean':
             self.reducer = ReduceMeanLayer()
-        elif nn_name.lower() == 'sum':
+        elif nn_name.lower() == 'reducesum':
             self.reducer = ReduceSumLayer()
-        elif nn_name.lower() == 'max':
+        elif nn_name.lower() == 'reducemax':
             self.reducer = RecuderMaxLayer()
-        elif nn_name.lower() == 'concat':
-            self.reducer = ConcatenateLayer()
+        elif nn_name.lower() == 'reduceconcat':
+            self.reducer = ReduceConcatLayer()
             # TODO: need to assert something
             assert self.output_size % self.input_size == 0
         else:
@@ -74,12 +72,14 @@ class Reducer_Layer(torch.nn.Module):
         
         # print(holder.shape, info.shape)
         # the following part is the data proprocessing
-        leng_mask = holder == 0
-        info = self.reducer(info, leng_mask)
+        
+        # info = self.reducer(info, leng_mask)
+        info = self.reducer(info, holder)
         
         for name, layer in self.postprocess.items():
             info = layer(info)
             
+        leng_mask = holder == 0
         holder = (leng_mask == 0).sum(-1)
         
         # output_name_nnlvl is not necessarily to be stored in the 

@@ -7,27 +7,24 @@ def get_EmbeddingBlock_SubUnit(full_recfldgrn_list, default_E_subunit_name = 'E'
     for input_name in full_recfldgrn_list:
         d = {}
         d['SubUnitName'] = default_E_subunit_name
-        
         recfldgrn = '-'.join(input_name.split('-')[-2:])
         output_layerid = len(input_name.split('-'))
         output_name = input_name.split('Grn')[0]
-        
         d['input_names'] = [input_name]
         d['output_name'] = output_name
-        
         d['output_layerid'] = output_layerid
-        
         SubUnit_List.append(d)
         
     df_SubUnit = pd.DataFrame(SubUnit_List)
-    
     return df_SubUnit
 
 
+# to dataflowfn.embedflowfn
 def get_Default_ExpanderNNPara(full_recfldgrn, fldgrn_folder):
     
     # (1) get basic information
-    recfld = [i for i in full_recfldgrn.split('-') if '@' in i][0]
+    # recfld = [i for i in full_recfldgrn.split('-') if '@' in i][0]
+    recfld = [i for i in full_recfldgrn.split('-')][-2]
     # rec, fld = recfld.split('@')
     # grn_suffix = [i for i in full_recfldgrn.split('-') if 'Grn' in i][0]
     # grn, suffix = grn_suffix.split('_')

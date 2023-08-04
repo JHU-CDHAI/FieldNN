@@ -1,11 +1,11 @@
-
 import torch
 
-class ConcatenateLayer(torch.nn.Module):
+class ReduceConcatLayer(torch.nn.Module):
     def __init__(self):
-        super(ConcatenateLayer, self).__init__()
+        super(ReduceConcatLayer, self).__init__()
 
-    def forward(self, info, leng_mask):
+    def forward(self, info, holder):
+        leng_mask = holder == 0
         l, dim = info.shape[-2:]
         info = info.view(*info.shape[:-2],  l*dim)
         return info   

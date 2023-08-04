@@ -26,113 +26,60 @@ def get_Repr_dataflow_table(full_recfldgrn_list):
     return df_dataflow
 
 
-def update_df_Repr_dataflow(df, style = 'Reducer&Merger'):
-    
-    '''
-        This function try to auto-fill the data flow from each field to the end field 'B-P'.
-        There are two styles:
-            style 'Reducer&Merger': Merging the tensors along the data flow.
-            style 'ReducerOnly': Don't merge the tensors until the end of the models. 
-    
-    '''
-    
+def update_df_Repr_dataflow(df):
     
     df_dataflow = df.copy()
 
     for layer_idx in df_dataflow.columns:
         
-        # (1) first deal with the fld in each layer
-        s = df_dataflow[layer_idx]
-        current_fullrfg_list = s[-s.isna()].to_list()
-        fld_with_at = [i for i in current_fullrfg_list if '@' in i.split('-')[-1]]
-        fld_with_at_to_keep = []
-        fld_with_at_to_check = [i for i in fld_with_at if i not in fld_with_at_to_keep]
-        
-        while len(fld_with_at_to_check) > 0:
-            for index in df_dataflow.index:
-                full_recfldgrn = df_dataflow.loc[index, layer_idx]
-                if pd.isna(full_recfldgrn): continue
-                if full_recfldgrn == 'ToFill': continue
-                
-                if '@' in full_recfldgrn.split('-')[-1]:
-                    
-                    prefix = '-'.join(full_recfldgrn.split('-')[:-1])
-                    curfld = full_recfldgrn.split('-')[-1] # PNSectSent@Sentence@Tk
-                    headfld, tailfld = get_curfld_recinfo(curfld) # head: PNSectSent@Sentence, tail: Tk
-                    
-                    full_recfldgrn_new = full_recfldgrn.replace('@' + tailfld, '')
-                    same_rfg_new = [i for i in current_fullrfg_list if full_recfldgrn_new in i]
-                    
-                    # print(f'for Layer {layer_idx}')
-                    # print(full_recfldgrn, '<--- full_recfldgrn')
-                    # print(full_recfldgrn_new, '<--- full_recfldgrn_new')
-                    # print(same_rfg_new, '<--- same_rfg_new')
-                    
-                    if len(same_rfg_new) == 1:
-                        # print(full_recfldgrn)
-                        df_dataflow.loc[index, layer_idx] = full_recfldgrn_new
-                        ############# need to think about this
-                        s = df_dataflow[layer_idx]
-                        current_fullrfg_list = s[-s.isna()].to_list()
-                        #############
-                        
-
-                    elif len(same_rfg_new) > 1:
-                        
-                        if style == 'Reducer&Merger':
-                            fld_with_at_to_keep.extend(same_rfg_new)
-                            
-                            # To update a new Column
-                            tailfld_merged = '&'.join([i.replace(full_recfldgrn_new +'@', '') for i in same_rfg_new])
-                            new_index = '(Merge)' + headfld + '@' + tailfld_merged#
-                            if new_index in df_dataflow.index: continue
-
-                            selected_index_list = [df_dataflow[df_dataflow[layer_idx] == i].index[0] for i in same_rfg_new]
-                            # print(selected_index_list)
-
-                            l = list(df_dataflow.index)
-                            # print(l, '<--- l original columns')
-                            loc = max([l.index(i) for i in selected_index_list])
-                            l.insert(loc + 1, new_index)
-                            # print(l, '<--- l with new index columns')
-
-                            df_dataflow.loc[new_index, layer_idx] = full_recfldgrn_new
-                            df_dataflow = df_dataflow.reindex(l)
-                            # print(list(df_dataflow.index), '<--- df_dataflow with new index columns')
-
-                            ############# need to think about this
-                            # s = df_dataflow[layer_idx]
-                            # current_fullrfg_list = s[-s.isna()].to_list()
-                            #############
-                            fld_with_at_to_keep.append(full_recfldgrn_new)
-                            # print(fld_with_at_to_keep, '<----------------'
-                            
-                        elif style == 'ReducerOnly':
-                            fld_with_at_to_keep.extend(same_rfg_new)
-                            
-                        else:
-                            raise ValueError('Wrong style, only for Reducer&Merger and ReducerOnly')
-                            
-            
-            # (2) update conditions
-            s = df_dataflow[layer_idx]
-            current_fullrfg_list = s[-s.isna()].to_list()
-            fld_with_at = [i for i in current_fullrfg_list if '@' in i.split('-')[-1]]
-            fld_with_at_to_check = [i for i in fld_with_at if i not in fld_with_at_to_keep]
-            
-        if layer_idx == df_dataflow.columns[-1]: continue
-        # then update the next layer information
+        # from layerid: full_recfldgrn to layerid-1: pfx_rec if pfx_rec is unique.
         for index in df_dataflow.index:
-            last = df_dataflow.loc[index, layer_idx]
-            if pd.isna(last): continue
-            if '@' in last.split('-')[-1] and style == 'Reducer&Merger': continue
-            full_recfldgrn_next = '-'.join(last.split('-')[:-1]) + '@' + last.split('-')[- 1]
-            df_dataflow.loc[index, layer_idx - 1] = full_recfldgrn_next
-            
-            
-    if style == 'ReducerOnly':
-        df_dataflow.loc['(Merge)P@All', 2] = 'B-P' 
+            full_recfldgrn = df_dataflow.loc[index, layer_idx] 
+            if pd.isna(full_recfldgrn): continue
+            # if full_recfldgrn == 'ToFill': continue
+            pfx_rec = '-'.join(full_recfldgrn.split('-')[:-1])
+            cur_rec = full_recfldgrn.split('-')[-1]
+            s = df_dataflow.loc[df_dataflow.index != index, layer_idx]
+            current_fullrfg_list = s[-s.isna()].to_list()
+            current_pfxrec_list = ['-'.join(i.split('-')[:-1]) for i in current_fullrfg_list]
+
+            # print(current_pfxrec_list)
+            if pfx_rec not in current_pfxrec_list:
+                pfx_rec_list = pfx_rec.split('-')
+                pfx_rec_list[-1] = pfx_rec_list[-1].replace('@', '')
+                output_recfldgrn = '-'.join(pfx_rec_list)
+                df_dataflow.loc[index, layer_idx - 1] = output_recfldgrn
         
+        # create new merge index.
+        s = df_dataflow.loc[:, layer_idx]
+        current_fullrfg_list = s[-s.isna()].to_list()
+        if len(current_fullrfg_list) == 0: continue
+        current_pfxrec_list = [{'i': i, 'j': '-'.join(i.split('-')[:-1])} for i in current_fullrfg_list]
+        dfx = pd.DataFrame(current_pfxrec_list)
+        s = dfx.groupby('j').apply(lambda x: x['i'].to_list()).to_dict()
+        s = {k: v for k, v in s.items() if len(v) > 1}
+        # print(s)
+        for pfx_rec, fullrec_list in s.items():
+            
+            full_recfldgrn_new = pfx_rec + '-' + '&'.join([i.split('-')[-1] for i in fullrec_list])
+            new_index = '(Merge)' + full_recfldgrn_new
+            l = list(df_dataflow.index)
+            
+            # print(fullrec_list, '<----')
+            # print(df_dataflow[layer_idx].to_list(), '<----')
+            
+            selected_index_list = df_dataflow[df_dataflow[layer_idx].isin(fullrec_list)].index
+            # print(selected_index_list)
+            loc = max([l.index(i) for i in selected_index_list])
+            l.insert(loc + 1, new_index)
+            
+            df_dataflow.loc[new_index, layer_idx] = full_recfldgrn_new
+            df_dataflow.loc[new_index, layer_idx-1] = pfx_rec
+            df_dataflow = df_dataflow.reindex(l)
+            
+            
+    df_dataflow = df_dataflow.iloc[:, :-1]
+            
     return df_dataflow
 
 
@@ -164,7 +111,7 @@ def update_df_Repr_dataflow_completename(df):
 
 def get_Repr_SubUnit_List(df_dataflow, 
                           default_R_subunit_name = 'RL', 
-                          default_MR_subunit_name = 'MRL', # or 'MLRL'
+                          default_MR_subunit_name = 'ML', # or 'MLRL'
                          ):
     layeridx_list = list(df_dataflow.columns)
     
@@ -179,6 +126,38 @@ def get_Repr_SubUnit_List(df_dataflow,
 
         B_tensors = df_dataflow[B_layerid]
         B_tensors = B_tensors[-B_tensors.isna()].to_dict()
+        
+        
+        # Deal with the Merge First.
+        # from B tensor: potential there are some Merger NNs. 
+        # print('B', B_tensors)
+        # check whether these is a '(Merger') in the key
+        # merger_tensors = [v for k, v in B_tensors.items() if '(Merge)' in k and '@' not in v]
+        # merger_tensors = [v for k, v in B_tensors.items() if '(Merge)' in k]
+        # print('B-merger_tensors', merger_tensors)
+        
+        merger_tensors = [tensor for index, tensor in A_tensors.items() 
+                          if '(Merge)' in index and '&' in tensor]
+        
+        # print(merger_tensors, '<----- merger_tensors', A_layerid)
+
+        for output_tensor in merger_tensors:
+            # print(B_tensors, '<---- B_tensor')
+            input_tensors = [i for k, i in A_tensors.items() 
+                             if '-'.join(output_tensor.split('-')[:-1]) == '-'.join(i.split('-')[:-1])]
+            input_tensors = [i for i in input_tensors if i != output_tensor]
+            # print(output_tensor, ':', input_tensors)
+
+            d = {}
+            d['SubUnitName'] = default_MR_subunit_name
+            d['input_names'] = input_tensors
+            d['output_name'] = output_tensor
+            
+            d['input_layerid'] = A_layerid
+            d['output_layerid'] = A_layerid
+        
+            SubUnit_List.append(d)
+        
 
         # print(f'\nFrom Layer {A_layerid} to {B_layerid}:')
 
@@ -187,6 +166,7 @@ def get_Repr_SubUnit_List(df_dataflow,
 
         # print('A', A_tensors)
         for k in A_tensors:
+            # pass the merged tensors. 
             if k not in B_tensors: continue
 
             input_name = A_tensors[k]
@@ -200,28 +180,6 @@ def get_Repr_SubUnit_List(df_dataflow,
             d['output_name'] = output_name
             
             d['input_layerid'] = A_layerid
-            d['output_layerid'] = B_layerid
-        
-        
-            SubUnit_List.append(d)
-
-
-        # from B tensor: potential there are some Merger NNs. 
-        # print('B', B_tensors)
-        # check whether these is a '(Merger') in the key
-        merger_tensors = [v for k, v in B_tensors.items() if '(Merge)' in k and '@' not in v]
-        # print('B-merger_tensors', merger_tensors)
-
-        for output_tensor in merger_tensors:
-            input_tensors = [i for k, i in B_tensors.items() if output_tensor + '@' in i]
-            # print(output_tensor, ':', input_tensors)
-
-            d = {}
-            d['SubUnitName'] = default_MR_subunit_name
-            d['input_names'] = input_tensors
-            d['output_name'] = output_tensor
-            
-            d['input_layerid'] = B_layerid
             d['output_layerid'] = B_layerid
         
             SubUnit_List.append(d)

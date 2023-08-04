@@ -22,8 +22,16 @@ class RFGDataset(Dataset):
             tensor_folder = os.path.join(Tensor_folder, recfldgrn)
             # (2) get df_Pat and full_recfldgrn
             df_tensor_fnl = load_df_data_from_folder(tensor_folder)
+
+            ################### adjust the name here. 
+            new_names = {i:'-'.join([t.split('@')[0] for t in i.split('-')]) for i in df_tensor_fnl.columns}
+            df_tensor_fnl = df_tensor_fnl.rename(columns = new_names)
+            ###################
+
+
             df_tensor_fnl = df_tensor_fnl[df_tensor_fnl[RecRootID].isin(Elig_Set)].reset_index(drop = True).set_index(RecRootID) 
             L.append(df_tensor_fnl)
+        
         data = reduce(lambda left, right: pd.merge(left, right, on=RecRootID), L)
         self.data = data
         
